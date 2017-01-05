@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('webuiApp')
-    .controller('NavigationCtrl', function ($scope, $location, User) {
+    .controller('NavigationCtrl', function ($scope, $location, User, hideNavigation) {
 
         $scope.primaryMenu = [
             {name: 'Home', href: ''}
         ];
+
+        $scope.hideNav = hideNavigation;
 
         $scope.userInfo = {userName: 'unknown'};
 
