@@ -80,7 +80,7 @@ http.createServer(function (req, res) {
                     // Quick & dirty method to parse the access_token
                     var redirectUrl = response.request.href;
                     var accessToken = redirectUrl.substring(redirectUrl.indexOf("access_token=")+13, redirectUrl.indexOf("&"));
-                    console.log(accessToken);
+
                     res.end(jsonResponse({userToken: accessToken}));
                 });
                 
