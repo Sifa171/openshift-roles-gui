@@ -10,19 +10,20 @@ var serveStatic = require('serve-static');
 
 // To parse urls
 var parser = require('url');
+var path = require('path');
 
 
 // Http proxy
 var httpProxy = require('http-proxy');
+
+// Serve static files of the webUi
+var serve = serveStatic("../");
 
 
 // Create http server
 http.createServer(function (req, res) {
     // Parse the request url
     var url = parser.parse(req.url, true);
-    //console.log(url);
-
-    console.log(url.pathname.split("/")[1]);
 
     // Decide action based on path
     switch(url.pathname.split("/")[1]) {
@@ -40,12 +41,27 @@ http.createServer(function (req, res) {
             break;
         default:
             // Serve static files from webgui
-            console.log("serve default pages");
+            console.log("Serve static page: " + req.url);
 
+            var filePath = '.' + req.url;
+            if (filePath == './')
+                filePath = './index.html';
+
+            var extname = path.extname(filePath);
+            switch (extname) {
+                // TODO: Remove this in non-dev version or make variable to toggle it
+                // For debugging/dev purposes: no caching of js files
+                case '.js':
+                case '.html':
+                    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+                    res.setHeader('Pragma', 'no-cache');
+                    console.log("set no-cache shit");
+                    break;
+            }
+
+            var done = finalhandler(req, res);
+            serve(req, res, done);
     }
 
-
-    //console.log(req.url);
-    res.end('welcome');
-
 }).listen(8080);
+console.log("Now serving on http://localhost:8080");
