@@ -18,7 +18,6 @@ angular.module("loginService", [])
         var userName = null;
         var userToken = null;
         var hostname = null;
-        var password = null;
 
         return {
 
@@ -41,13 +40,6 @@ angular.module("loginService", [])
             },
             setHostname: function(value) {
                 hostname = value;
-            },
-
-            getPassword: function () {
-                return password;
-            },
-            setPassword: function(value) {
-                password = value;
             }
         };
     });
