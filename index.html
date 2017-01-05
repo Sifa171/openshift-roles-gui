@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="login-pf">
 <head lang="en">
     <meta charset="UTF-8">
     <title>OSCP - Role Management</title>
@@ -95,6 +95,11 @@
         padding: 0px 10px;
     }
 
+    .login-pf body{
+        background-image: none !important;
+        background-color: #1d1d1d;
+    }
+
 </style>
 
 
@@ -102,7 +107,7 @@
 </head>
 <body ng-app="webuiApp">
 
-<div ng-controller="NavigationCtrl">
+<div ng-hide="hideNav.getHide()" ng-controller="NavigationCtrl">
     <div ng-include="'views/parts/navigation.html'"></div>
 </div>
 
@@ -114,9 +119,11 @@
 <!-- Controllers -->
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/navigation.js"></script>
+<script src="scripts/controllers/login.js"></script>
 
 <!-- Scripts -->
 <script src="scripts/services/userService.js"></script>
+<script src="scripts/services/loginService.js"></script>
 
 <!-- Filters -->
 <script src="scripts/filters/filesizeFilter.js"></script>

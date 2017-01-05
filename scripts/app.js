@@ -12,13 +12,18 @@ angular
         'LocalStorageModule',
         'patternfly',
         'patternfly.charts',
-        'userService'
+        'userService',
+        'loginService'
     ])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/', {
+            .when('/main', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
+            })
+            .when('/', {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
             })
             .otherwise({
                 redirectTo: '/'
