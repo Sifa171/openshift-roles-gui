@@ -15,9 +15,10 @@ angular.module("loginService", [])
         };
     })
     .factory('loginInformation', function () {
-        var userName = 'default';
-        var userToken = 'defaultToken';
-        var openShiftServer = 'https://localhost:8443/';
+        var userName = null;
+        var userToken = null;
+        var hostname = null;
+        var password = null;
 
         return {
 
@@ -35,12 +36,18 @@ angular.module("loginService", [])
                 userToken = value;
             },
 
-            getOpenShiftServer: function () {
-                return openShiftServer;
+            getHostname: function () {
+                return hostname;
             },
-            setOpenShiftServer: function(value) {
-                openShiftServer = value;
-            }
+            setHostname: function(value) {
+                hostname = value;
+            },
 
+            getPassword: function () {
+                return password;
+            },
+            setPassword: function(value) {
+                password = value;
+            }
         };
     });

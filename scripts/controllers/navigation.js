@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('webuiApp')
-    .controller('NavigationCtrl', function ($scope, $location, User, hideNavigation, loginInformation, $window) {
+    .controller('NavigationCtrl', function ($scope, $location, hideNavigation, loginInformation, $window, localStorageService) {
 
         $scope.primaryMenu = [
             {name: 'Home', href: ''}
@@ -9,20 +9,11 @@ angular.module('webuiApp')
 
         $scope.hideNav = hideNavigation;
         $scope.loginInfo = loginInformation;
-
-        $scope.userInfo = {userName: 'unknown'};
+        $scope.hostname = localStorageService.get('hostname');
 
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path() ? "active" : "";
         };
-
-        $scope.getUserInfo = function () {
-            User.userInfo()
-                .success(function (data) {
-                    $scope.userInfo.userName = data.data.user.userName;
-                });
-        };
-        $scope.getUserInfo();
 
         $scope.logout = function () {
             hideNavigation.setHide(true);
