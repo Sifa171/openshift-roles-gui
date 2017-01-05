@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('webuiApp')
-    .controller('NavigationCtrl', function ($scope, $location, User, hideNavigation) {
+    .controller('NavigationCtrl', function ($scope, $location, User, hideNavigation, $window) {
 
         $scope.primaryMenu = [
             {name: 'Home', href: ''}
@@ -22,5 +22,10 @@ angular.module('webuiApp')
                 });
         };
         $scope.getUserInfo();
+
+        $scope.logout = function () {
+            hideNavigation.setHide(true);
+            $window.location.href= ".";
+        }
 
     });
