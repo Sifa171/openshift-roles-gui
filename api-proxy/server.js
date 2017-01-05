@@ -2,6 +2,9 @@
  * Created by meissner on 05.01.17.
  * Main script for the api-proxy server
  */
+// Enable unsecure/self signed certificates
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 // WebServer
 var http = require('http');
 // Serve static pages
@@ -22,9 +25,6 @@ var httpProxy = require('http-proxy');
 // Serve static files of the webUi
 var serve = serveStatic("../");
 
-// Enable unsecure/self signed certificates
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 // Make requests (used to obtain the token)
 var request = require("request");
 
@@ -41,6 +41,8 @@ function jsonResponse(responseData, errorMessage) {
 
     return JSON.stringify(response);
 }
+
+var proxy = httpProxy.createProxyServer({});
 
 // Create http server
 http.createServer(function (req, res) {
@@ -87,7 +89,14 @@ http.createServer(function (req, res) {
             break;
         case 'api-proxy':
             // Simple proxy to api
-            console.log("api-proxy");
+            console.log('api-proxy to server ' + url.query._server);
+
+            // Rewrite URL to original request
+            req.url = 'https://' + url.query._server + url.path.substr(10);
+
+            // Proxy Request
+            proxy.web(req, res, { target: 'https://' + url.query._server , secure: false});
+
             break;
         case 'api-proxy-socket':
             // TODO: WebSocket Proxy to api
