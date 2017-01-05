@@ -3,6 +3,9 @@
 angular.module("loginService", [])
     .factory('hideNavigation', function () {
         var hide = true;
+        var userName = 'default';
+        var userToken = 'defaultToken';
+        var openShiftServer = 'https://localhost:8443/';
 
         return {
             getHide: function () {
@@ -10,6 +13,28 @@ angular.module("loginService", [])
             },
             setHide: function(value) {
                 hide = value;
-            }
+            },
+
+            getUserName: function () {
+                return userName;
+            },
+            setUserName: function(value) {
+                userName = value;
+            },
+
+            getUserToken: function () {
+                return userToken;
+            },
+            setUserToken: function(value) {
+                userToken = value;
+            },
+
+            getOpenShiftServer: function () {
+                return openShiftServer;
+            },
+            setOpenShiftServer: function(value) {
+                openShiftServer = value;
+            },
+
         };
     });
