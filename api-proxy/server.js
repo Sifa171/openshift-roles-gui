@@ -104,21 +104,32 @@ http.createServer(function (req, res) {
             break;
         default:
             // Serve static files from webgui
-            console.log("Serve static page: " + req.url);
 
+            // Prepare the file-path (and append index.html if root dir)
             var filePath = '.' + req.url;
-            if (filePath == './')
+            if (filePath == './') {
                 filePath = './index.html';
+            }
 
             var extname = path.extname(filePath);
             switch (extname) {
-                // TODO: Remove this in non-dev version or make variable to toggle it
-                // For debugging/dev purposes: no caching of js files
+                case '.png':
+                case '.ico':
+                case '.svg':
+                case '.woff':
+                    // dont log assets
+                    break;
                 case '.js':
                 case '.html':
+                    // TODO: Remove this in non-dev version or make variable to toggle it
+                    // For debugging/dev purposes: no caching of js files
                     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
                     res.setHeader('Pragma', 'no-cache');
-                    console.log("set no-cache shit");
+                    console.log('Serve static page: ' + req.url + ' (Without caching for dev)');
+                    break;
+                default:
+                    // Access log
+                    console.log('Serve static page: ' + req.url);
                     break;
             }
 
