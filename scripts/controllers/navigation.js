@@ -9,7 +9,7 @@ angular.module('webuiApp')
 
         $scope.hideNav = hideNavigation;
         $scope.loginInfo = loginInformation;
-        $scope.hostname = localStorageService.get('hostname');
+       // $scope.hostname = localStorageService.get('hostname');
 
         $scope.isActive = function (viewLocation) {
             return viewLocation === $location.path() ? "active" : "";

@@ -6,7 +6,9 @@ angular.module('webuiApp')
         $scope.login = function () {
             localStorageService.add('username', $scope.username);
             localStorageService.add('hostname', $scope.hostname);
-            loginInformation
+            loginInformation.setHostname($scope.hostname);
+            loginInformation.setUserName($scope.username);
+
             console.log(localStorageService.get('username'));
             console.log(localStorageService.get('password'));
             console.log(localStorageService.get('hostname'));
