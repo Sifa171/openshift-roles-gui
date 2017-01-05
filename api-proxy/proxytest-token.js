@@ -11,7 +11,7 @@ request.post({
     form: {
         username: 'developer',
         password: 'developer',
-        apiServer: '192.168.1.20:8443'
+        server: '192.168.1.20:8443'
     }
 }, function (error, response, body) {
     console.log(body);

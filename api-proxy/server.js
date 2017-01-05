@@ -74,7 +74,7 @@ http.createServer(function (req, res) {
                 // TODO: Check format of apiServer url and check if all values are set and valid
 
                 // Obtain token from OpenShift API
-                var url = 'https://' + postData.username + ':' + postData.password + '@' + postData.apiServer + '/oauth/authorize?client_id=openshift-challenging-client&response_type=token';
+                var url = 'https://' + postData.username + ':' + postData.password + '@' + postData.server + '/oauth/authorize?client_id=openshift-challenging-client&response_type=token';
 
                 request({url: url}, function (error, response, body) {
                     // Quick & dirty method to parse the access_token
