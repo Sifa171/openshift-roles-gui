@@ -116,12 +116,15 @@
 
 </head>
 <body ng-app="webuiApp">
-<div ng-hide="hideNav.getHide()" ng-controller="NavigationCtrl" >
-    <div ng-include="'views/parts/navigation.html'" class="container-fluid container-cards-pf container-pf-nav-pf-vertical      nav-pf-persistent-secondary"></div>
-</div>
+<div class="container-fluid container-cards-pf container-pf-nav-pf-vertical nav-pf-persistent-secondary">
+    <div ng-hide="hideNav.getHide()" ng-controller="NavigationCtrl" >
+        <div ng-include="'views/parts/navigation.html'"></div>
+    </div>
 
-<!-- Add your site or application content here -->
-<div class="container-fluid" ng-view=""></div>
+    <!-- Add your site or application content here -->
+    <div ng-view=""></div>
+
+</div>
 
 <script src="scripts/app.js"></script>
 
