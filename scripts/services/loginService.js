@@ -20,7 +20,6 @@ angular.module("loginService", [])
         var hostname = null;
 
         return {
-
             getUserName: function () {
                 return userName;
             },
