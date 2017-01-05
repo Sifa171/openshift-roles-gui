@@ -1,0 +1,11 @@
+# IDEA Project Files
+.idea/
+
+# OS Files
+ehthumbs.db
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
