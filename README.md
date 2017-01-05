@@ -25,4 +25,4 @@ There is a simple node.js example in ``api-proxy/proxytest-token.js`` which demo
 In order to reach servers which are on different domains than the roles gui (which uses ajax) there is a simple api-proxy function. (Which does not proxy WebSocket at the moment)
 There is a simple example in ``api-proxy/proxytest-client.js``
 #### Example
-If you want to access the following api https://ose-cluster.example.com:8443/oapi/v1/roles you can use the api-proxy with the URL http://localhost:8080/api-proxy/oapi/v1/roles?_server=ose-cluster.example.com:8443 to access your OpenShift 3 server.
+If you want to access the following api `https://ose-cluster.example.com:8443/oapi/v1/roles`` you can use the api-proxy with the URL ``http://localhost:8080/api-proxy/oapi/v1/roles?_server=ose-cluster.example.com:8443`` to access your OpenShift 3 server.
