@@ -6,7 +6,7 @@ angular.module('webuiApp')
         // Hide Navigation when login controller is loaded
         hideNavigation.setHide(true);
 
-        $scope.initLoginCredentials = function () {
+        $scope.initLoginCredentials = function (){
             if(localStorageService.get('remember') == true){
                 $scope.remember = localStorageService.get('remember');
                 $scope.username = localStorageService.get('username');
@@ -33,6 +33,7 @@ angular.module('webuiApp')
                 $window.location.href= "#main";
             }else{
                 // TODO: error with Dialog
+                $scope.errorMessage = loginInformation.getErrorMessage();
             }
             });
             

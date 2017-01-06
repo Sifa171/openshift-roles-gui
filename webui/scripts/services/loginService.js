@@ -20,6 +20,7 @@ angular.module("loginService", [])
         var hostname = null;
         var success = null;
         var password = null;
+        var errorMessage = null;
 
         return {
             getPassword: function () {
@@ -54,6 +55,13 @@ angular.module("loginService", [])
             setHostname: function(value) {
                 hostname = value;
             },
+
+            getErrorMessage: function () {
+                return errorMessage;
+            },
+            setErrorMessage: function(value) {
+                errorMessage = value;
+            },
             requestToken: function (callbackFunction) {
                 var req = {
                     method: 'POST',
@@ -69,9 +77,15 @@ angular.module("loginService", [])
                 }
                 var self = this;
                 $http(req).then(function successCallback(response) {
-                    self.setUserToken(response.data.data.userToken);
-                    self.setSuccess(true);
-                    callbackFunction();
+                    if(response.data.error == true){
+                        self.setSuccess(false);
+                        self.setErrorMessage(response.data.error_message);
+                        callbackFunction();
+                    }else{
+                        self.setUserToken(response.data.data.userToken);
+                        self.setSuccess(true);
+                        callbackFunction();
+                    }
                 }, function errorCallback(response) {
                     self.setSuccess(false);
                     callbackFunction();
