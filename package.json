@@ -1,0 +1,27 @@
+{
+  "name": "openshift-roles-gui",
+  "version": "0.1.0",
+  "description": "OpenShift 3 Roles Management UI",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sifa91/openshift-roles-gui.git"
+  },
+  "keywords": [
+    "openshift",
+    "roles",
+    "ui",
+    "policy",
+    "authorization"
+  ],
+  "author": "Frederik Meissner, Sebastian Dehn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sifa91/openshift-roles-gui/issues"
+  },
+  "homepage": "https://github.com/Sifa91/openshift-roles-gui#readme"
+}
