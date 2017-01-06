@@ -11,4 +11,4 @@ Thumbs.db
 .Trashes
 
 # ignore node_modules
-api-proxy/node_modules/
+node_modules/
