@@ -2,7 +2,7 @@
 
 </div>
 
-<span id="badge">
+<span id="badge" ng-init="initLoginCredentials()">
   <img src="bower_components/patternfly/dist/img/OpenShift-Logo-NoText.svg" height="200px" alt=" OpenShift Logo" />
 </span>
 <div class="container">
@@ -36,7 +36,7 @@
                     <div class="col-xs-8 col-sm-offset-2 col-sm-6 col-md-offset-2 col-md-6">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" tabindex="3"> Remember server and token
+                                <input type="checkbox" tabindex="3" ng-model="remember"> Remember username and hostname
                             </label>
                         </div>
                     </div>

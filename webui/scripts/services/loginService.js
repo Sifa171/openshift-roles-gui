@@ -69,8 +69,7 @@ angular.module("loginService", [])
                 }
                 var self = this;
                 $http(req).then(function successCallback(response) {
-                    console.log("Bklaaaaah");
-                    console.log(response);
+                    self.setUserToken(response.data.data.userToken);
                     self.setSuccess(true);
                     callbackFunction();
                 }, function errorCallback(response) {
