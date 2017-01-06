@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('webuiApp')
-    .controller('LoginCtrl', function ($scope, $window, localStorageService, loginInformation) {
+    .controller('LoginCtrl', function ($scope, $window, localStorageService, loginInformation, hideNavigation) {
+
+        // Hide Navigation when login controller is loaded
+        hideNavigation.setHide(true);
 
         $scope.login = function () {
             // set the credentials inside of the service
