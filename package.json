@@ -19,9 +19,17 @@
     "authorization"
   ],
   "author": "Frederik Meissner, Sebastian Dehn",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Sifa91/openshift-roles-gui/issues"
   },
-  "homepage": "https://github.com/Sifa91/openshift-roles-gui#readme"
+  "homepage": "https://github.com/Sifa91/openshift-roles-gui#readme",
+  "dependencies": {
+    "finalhandler": "^0.5.1",
+    "http-proxy": "^1.16.2",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.79.0",
+    "serve-static": "^1.11.1",
+    "url": "^0.11.0"
+  }
 }

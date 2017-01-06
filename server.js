@@ -23,7 +23,7 @@ var querystring = require('querystring');
 var httpProxy = require('http-proxy');
 
 // Serve static files of the webUi
-var serve = serveStatic("../");
+var serve = serveStatic("./webui/");
 
 // Make requests (used to obtain the token)
 var request = require("request");
