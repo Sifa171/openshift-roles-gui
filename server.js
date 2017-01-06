@@ -44,6 +44,12 @@ function jsonResponse(responseData, errorMessage) {
 
 var proxy = httpProxy.createProxyServer({});
 
+proxy.on('upgrade', function (req, socket, head) {
+    console.log(req);
+    console.log('--  WebProxy Upgrade detected');
+
+});
+
 // Create http server
 http.createServer(function (req, res) {
     // Parse the request url
@@ -79,11 +85,18 @@ http.createServer(function (req, res) {
                     if (typeof response !== 'undefined' && typeof response.request !== 'undefined' && typeof response.request.href !== 'undefined') {
 						// Redirect works and got url to token
 
+
                         // Quick & dirty method to parse the access_token
 						var redirectUrl = response.request.href;
-						var accessToken = redirectUrl.substring(redirectUrl.indexOf("access_token=")+13, redirectUrl.indexOf("&"));
+                        // Check if redirect contains requestToken
+                        if (redirectUrl.indexOf("access_token=") > 1) {
+                            var accessToken = redirectUrl.substring(redirectUrl.indexOf("access_token=")+13, redirectUrl.indexOf("&"));
+                            console.log('Got token ' + accessToken);
+                            res.end(jsonResponse({userToken: accessToken}));
+                        } else {
+                            res.end(jsonResponse(null, "Did not got an access_token, propably access denied"));
+                        }
 
-						res.end(jsonResponse({userToken: accessToken}));
 					} else {
 						// TODO: Error handling to display wrong username/password
 						res.end(jsonResponse(null, "Did not got redirected and got no token"));
