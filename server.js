@@ -69,6 +69,7 @@ http.createServer(function (req, res) {
             });
             req.on('end', function () {
                 var postData = querystring.parse(postBody);
+                
                 console.log(postData);
 
                 // TODO: Check format of apiServer url and check if all values are set and valid
@@ -78,10 +79,21 @@ http.createServer(function (req, res) {
 
                 request({url: url}, function (error, response, body) {
                     // Quick & dirty method to parse the access_token
-                    var redirectUrl = response.request.href;
-                    var accessToken = redirectUrl.substring(redirectUrl.indexOf("access_token=")+13, redirectUrl.indexOf("&"));
 
-                    res.end(jsonResponse({userToken: accessToken}));
+	
+                    if (typeof response !== 'undefined' && typeof response.request !== 'undefined' && typeof response.request.href !== 'undefined') {
+						// Redirect works and got url to token
+						
+						var redirectUrl = response.request.href;
+						var accessToken = redirectUrl.substring(redirectUrl.indexOf("access_token=")+13, redirectUrl.indexOf("&"));
+						console.log("works token" + accessToken);
+						res.end(jsonResponse({userToken: accessToken}));
+					} else {
+						console.log("undefined");
+						res.end(jsonResponse(null, "Did got redirected and got no token"));
+					}
+                    
+                    
                 });
                 
             });

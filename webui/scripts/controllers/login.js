@@ -10,8 +10,8 @@ angular.module('webuiApp')
             loginInformation.setPassword($scope.password);
 
             // make the request
-            loginInformation.requestToken();
-            if(loginInformation.getSuccess() == true){
+            loginInformation.requestToken(function() {
+			if(loginInformation.getSuccess() == true){
                 localStorageService.add('username', $scope.username);
                 localStorageService.add('hostname', $scope.hostname);
                 localStorageService.add('userToken', loginInformation.getUserToken());
@@ -19,6 +19,8 @@ angular.module('webuiApp')
             }else{
                 console.log("error");
             }
+            });
+            
 
         }
 

@@ -54,22 +54,28 @@ angular.module("loginService", [])
             setHostname: function(value) {
                 hostname = value;
             },
-            requestToken: function () {
+            requestToken: function (callbackFunction) {
                 var req = {
                     method: 'POST',
                     url: 'http://localhost:8080/requestToken/',
-                    form: {
+                    headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					},
+                    data: $.param({
                         username: this.getUserName(),
                         password: this.getPassword(),
                         server: this.getHostname()
-                    }
+                    })
                 }
+                var self = this;
                 $http(req).then(function successCallback(response) {
                     console.log("Bklaaaaah");
                     console.log(response);
-                    this.setSuccess(true);
+                    self.setSuccess(true);
+                    callbackFunction();
                 }, function errorCallback(response) {
-                    this.setSuccess(false);
+                    self.setSuccess(false);
+                    callbackFunction();
                 });
             }
         };
