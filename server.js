@@ -54,7 +54,7 @@ http.createServer(function (req, res) {
         case 'requestToken':
             // TODO: Clean this up and move it into a module or at least function
             // Get token from api
-            console.log("request for token");
+            console.log("Request for token");
             res.setHeader('Content-Type', 'application/json');
 
             // Check if post request
@@ -62,15 +62,13 @@ http.createServer(function (req, res) {
                 res.end(jsonResponse(null, 'Only POST-Requests allowed'));
             }
 
-            
             var postBody = "";
             req.on('data', function (chunk) {
+                // Append to post
                 postBody += chunk;
             });
             req.on('end', function () {
                 var postData = querystring.parse(postBody);
-                
-                console.log(postData);
 
                 // TODO: Check format of apiServer url and check if all values are set and valid
 
@@ -78,19 +76,17 @@ http.createServer(function (req, res) {
                 var url = 'https://' + postData.username + ':' + postData.password + '@' + postData.server + '/oauth/authorize?client_id=openshift-challenging-client&response_type=token';
 
                 request({url: url}, function (error, response, body) {
-                    // Quick & dirty method to parse the access_token
-
-	
                     if (typeof response !== 'undefined' && typeof response.request !== 'undefined' && typeof response.request.href !== 'undefined') {
 						// Redirect works and got url to token
-						
+
+                        // Quick & dirty method to parse the access_token
 						var redirectUrl = response.request.href;
 						var accessToken = redirectUrl.substring(redirectUrl.indexOf("access_token=")+13, redirectUrl.indexOf("&"));
-						console.log("works token" + accessToken);
+
 						res.end(jsonResponse({userToken: accessToken}));
 					} else {
-						console.log("undefined");
-						res.end(jsonResponse(null, "Did got redirected and got no token"));
+						// TODO: Error handling to display wrong username/password
+						res.end(jsonResponse(null, "Did not got redirected and got no token"));
 					}
                     
                     
