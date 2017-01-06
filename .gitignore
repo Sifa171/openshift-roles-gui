@@ -9,3 +9,6 @@ Thumbs.db
 ._*
 .Spotlight-V100
 .Trashes
+
+# ignore node_modules
+api-proxy/node_modules/
