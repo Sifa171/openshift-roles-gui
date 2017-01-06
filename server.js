@@ -30,11 +30,12 @@ var request = require("request");
 
 
 // Function to return json for internal api
-function jsonResponse(responseData, errorMessage) {
+function jsonResponse(responseData, errorMessage, errorCode) {
     var response = {data:responseData};
     if (errorMessage) {
         response.error = true;
         response.error_message = errorMessage;
+        response.errorCode = errorCode;
     } else {
         response.error = false;
     }
@@ -94,12 +95,12 @@ http.createServer(function (req, res) {
                             console.log('Got token ' + accessToken);
                             res.end(jsonResponse({userToken: accessToken}));
                         } else {
-                            res.end(jsonResponse(null, "Did not got an access_token, propably access denied"));
+                            res.end(jsonResponse(null, "Did not got an access_token, propably access denied", 403));
                         }
 
 					} else {
 						// TODO: Error handling to display wrong username/password
-						res.end(jsonResponse(null, "Did not got redirected and got no token"));
+						res.end(jsonResponse(null, "Did not got redirected and got no token", 500));
 					}
                     
                     
