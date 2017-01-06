@@ -22,13 +22,17 @@ request({
 var options = {
     url: 'https://192.168.1.20:8443/oapi/v1/roles?pretty=true',
     headers: {
-        'User-Authorization': 'Bearer ' + 'WWlnAxQyVwxPx0Ok3wgjoHXFtYlMiV0cvJO3yP1jO7w'
+        'Authorization': 'Bearer ' + 'IIJ_DNe5Mi_lpTEmLwFWbL31JcsAalUqLaWfaklXb4I'
     }
 };
 
 function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
         //var info = JSON.parse(body);
+        console.log(body);
+    }else {
+        console.log("Error with status " + response.statusCode);
+        console.log(error);
         console.log(body);
     }
 }
