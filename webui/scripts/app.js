@@ -17,13 +17,17 @@ angular
     ])
     .config(function ($routeProvider) {
         $routeProvider
+            .when('/', {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            })
             .when('/main', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/', {
-                templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
+            .when('/groups', {
+                templateUrl: 'views/groups.html',
+                controller: 'GroupsCtrl'
             })
             .otherwise({
                 redirectTo: '/'
