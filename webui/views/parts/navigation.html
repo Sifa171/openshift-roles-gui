@@ -48,13 +48,13 @@
 
 <div class="nav-pf-vertical nav-pf-vertical-with-sub-menus">
     <ul class="list-group">
-        <li class="list-group-item active">
+        <li class="list-group-item {{ isActive('/main') }}">
             <a href="#/main">
                 <span class="fa fa-tachometer" data-toggle="tooltip" title="Dashboard"></span>
                 <span class="list-group-item-value">Dashboard</span>
             </a>
         </li>
-        <li class="list-group-item  secondary-nav-item-pf" data-target="#ipsum-secondary">
+        <li class="list-group-item  secondary-nav-item-pf  {{ isActive('main') }}" data-target="#ipsum-secondary">
             <a>
                 <span class="fa pficon-cluster" data-toggle="tooltip" title="ClusterRoles"></span>
                 <span class="list-group-item-value">Cluster Roles</span>
@@ -80,7 +80,7 @@
                 </ul>
             </div>
         </li>
-        <li class="list-group-item secondary-nav-item-pf" data-target="#ipsum-secondary">
+        <li class="list-group-item secondary-nav-item-pf  {{ isActive('/local') }}" data-target="#ipsum-secondary">
             <a>
                 <span class="fa pficon-container-node" data-toggle="tooltip" title="LocalRoles"></span>
                 <span class="list-group-item-value">Local Roles</span>
@@ -106,7 +106,7 @@
                 </ul>
             </div>
         </li>
-        <li class="list-group-item">
+        <li class="list-group-item  {{ isActive('/groups') }}">
             <a href="#/groups">
                 <span class="fa pficon-project" data-toggle="tooltip" title="Groups"></span>
                 <span class="list-group-item-value">Groups</span>

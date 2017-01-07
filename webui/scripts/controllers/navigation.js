@@ -11,6 +11,7 @@ angular.module('webuiApp')
         $scope.loginInfo = loginInformation;
 
         $scope.isActive = function (viewLocation) {
+
             return viewLocation === $location.path() ? "active" : "";
         };
 
