@@ -20,7 +20,7 @@ request({
 
 
 var options = {
-    url: 'https://192.168.1.20:8443/oapi/v1/roles?pretty=true',
+    url: 'https://192.168.1.20:8443/oapi/v1/groups?pretty=true',
     headers: {
         'Authorization': 'Bearer ' + 'IIJ_DNe5Mi_lpTEmLwFWbL31JcsAalUqLaWfaklXb4I'
     }
@@ -28,9 +28,10 @@ var options = {
 
 function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
+        console.log('success');
         //var info = JSON.parse(body);
         console.log(body);
-    }else {
+    } else {
         console.log("Error with status " + response.statusCode);
         console.log(error);
         console.log(body);

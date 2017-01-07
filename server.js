@@ -114,10 +114,6 @@ var httpServer = http.createServer(function (req, res) {
             proxy.web(req, res, { target: 'https://' + url.query._server , secure: false});
 
             break;
-        case 'api-proxy-socket':
-            // TODO: WebSocket Proxy to api
-            console.log("api-proxy-socket");
-            break;
         default:
             // Serve static files from webgui
 
@@ -161,18 +157,15 @@ httpServer.on('upgrade', function (req, socket, head) {
 
     console.log('--  httpServer Upgrade detected');
 
-    console.log(head);
-
     // Simple proxy to api
     var url = parser.parse(req.url, true);
     console.log('api-proxy to server ' + url.query._server);
     console.log(req.url);
-    // Rewrite URL to original request
-    req.url = /*'http://' + url.query._server + */req.url.substr(10);
-    console.log(req.url);
 
+    // Rewrite URL to original request
+    req.url = 'wss://' + url.query._server + req.url.substr(10);
 
     // Proxy upgrade request
-    proxy.ws(req, socket, head, {target: req.url});
+    proxy.ws(req, socket, head, {target: req.url, secure: false});
 });
 console.log("Now serving on http://localhost:8080");

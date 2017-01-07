@@ -14,20 +14,32 @@ angular.module('webuiApp')
             return viewLocation === $location.path() ? "active" : "";
         };
 
-        $scope.init = function() {
+        $scope.init = function () {
             var tokenExpiration = localStorageService.get('tokenExpiration');
-            if(tokenExpiration != null && (tokenExpiration < Date.now() + 24 * 60 * 60 * 1000)){
+
+            if (tokenExpiration != null && (tokenExpiration > Date.now())) {
                 setLoginInformationFromLocalStorage();
                 console.log(loginInformation.getUserToken());
                 console.log(loginInformation.getUserName());
                 console.log(loginInformation.getHostname());
-            }else{
-                if (!loginInformation.getUserName() || !loginInformation.getUserToken()) {
-                    $window.location.href= "#login";
-                } else if ($location.path() && $location.path() != '/') {
+
+                console.log("from local storage: " + $location.path());
+
+                if ($location.path() && $location.path() != '/') {
                     $scope.hideNav = false;
+                } else if (!$location.path() || $location.path() == '/login') {
+                    $window.location.href = "#/main";
                 }
+
+            } else {
+                console.log("token expired, please login again");
+
+                localStorageService.clearAll();
+                $window.location.href = "#/login";
+
             }
+
+
         };
         $scope.init();
 
@@ -47,7 +59,7 @@ angular.module('webuiApp')
             loginInformation.setUserName(null);
             loginInformation.setUserToken(null);
             hideNavigation.setHide(true);
-            $window.location.href= ".";
+            $window.location.href = ".";
         };
 
         // Load data from localStorage

@@ -32,9 +32,9 @@ angular.module('webuiApp')
             // make the request
             loginInformation.requestToken(function() {
 			if(loginInformation.getSuccess() == true){
-                var timeInMs = Date.now();
+                var timeExpiration = Date.now() + 24 * 60 * 60 * 1000;
                 localStorageService.add('userToken', loginInformation.getUserToken());
-                localStorageService.add('tokenExpiration', timeInMs);
+                localStorageService.add('tokenExpiration', timeExpiration);
                 console.log(localStorageService.get('tokenExpiration'));
                 $window.location.href= "#main";
             }else{

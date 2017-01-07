@@ -13,6 +13,7 @@ angular.module("loginService", [])
             }
 
         };
+
     })
     .factory('loginInformation', function ($http) {
         var userName = null;
