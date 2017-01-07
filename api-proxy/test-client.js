@@ -20,7 +20,7 @@ request({
 
 
 var options = {
-    url: 'https://192.168.1.20:8443/oapi/v1/groups?pretty=true',
+    url: 'https://192.168.1.20:8443/oapi/v1/roles?pretty=true',
     headers: {
         'Authorization': 'Bearer ' + 'IIJ_DNe5Mi_lpTEmLwFWbL31JcsAalUqLaWfaklXb4I'
     }

@@ -7,10 +7,11 @@ angular.module('webuiApp')
             if (!loginInformation.getUserName() && !loginInformation.getUserToken() && !loginInformation.getUserToken()) {
                 $scope.notloggedIn = true;
             }
-            countGroups();
-            countUser();
-            countPolicyBindings();
             countRoles();
+            //countGroups();
+            //countUser();
+            //countPolicyBindings();
+
         };
 
         function countUser(){
@@ -30,7 +31,7 @@ angular.module('webuiApp')
         };
 
         function countRoles(){
-            var object = 'roles';
+            var object = 'watch/roles';
             $scope.roleCount= 0;
             watchApiService.watchApi(object, 'MainCtrl', function(apiObject, message) {
                 // Callback if something changes
