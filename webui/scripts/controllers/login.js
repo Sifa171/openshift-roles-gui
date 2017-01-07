@@ -13,6 +13,10 @@ angular.module('webuiApp')
                 $scope.hostname = localStorageService.get('hostname');
             }
         }
+        
+        $scope.cleanErrorMessage = function () {
+            loginInformation.setErrorMessage(null);
+        }
 
         $scope.login = function () {
             // set the credentials inside of the service
@@ -27,13 +31,12 @@ angular.module('webuiApp')
 
             // make the request
             loginInformation.requestToken(function() {
-                // TODO: Spinning Modal
 			if(loginInformation.getSuccess() == true){
                 localStorageService.add('userToken', loginInformation.getUserToken());
                 $window.location.href= "#main";
             }else{
-                // TODO: error with Dialog
                 $scope.errorMessage = loginInformation.getErrorMessage();
+                $scope.password = '';
             }
             });
             
