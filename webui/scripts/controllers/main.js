@@ -57,19 +57,17 @@ angular.module('webuiApp')
 
         function countGroups() {
             var object = 'groups';
-            apiObjectHandler.requestObject(object, function (success, response) {
-                if (success) {
-                    var groups = response.data.items;
-                    $scope.groupCount = groups.length;
-                    watchApiService.watchApi('groups', 'MainCtrl', function(apiObject, message) {
-                        // Callback if something changes
-                        console.log('Got a change for ' + apiObject);
-                        console.log(message);
-                    });
-                } else {
-                    console.log('error');
-                    console.log(response);
-                }
+            $scope.groupCount = 0;
+            watchApiService.watchApi(object, 'MainCtrl', function(apiObject, message) {
+                // Callback if something changes
+                console.log('Got a change for ' + apiObject);
+                console.log(message);
+                $scope.$apply(function(){
+                    var dataJson = angular.fromJson(message.data);
+                    if(dataJson.type == 'ADDED'){
+                        $scope.groupCount = $scope.groupCount +1;
+                    }
+                });
             });
 
         };
