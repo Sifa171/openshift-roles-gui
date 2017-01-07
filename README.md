@@ -1,6 +1,8 @@
 # openshift-roles-gui
 This is a GUI for OpenShift roles
 
+![OCSP Roles Management Login](https://github.com/Sifa91/openshift-roles-gui/blob/master/doc/oscp_rm_login.png)
+
 ## api-proxy
 This is a node.js program which acts as webserver for the gui and as proxy to the OpenShift API
 To use the api-proxy simply start it with ``node server.js``which starts the server on http://localhost:8080/
