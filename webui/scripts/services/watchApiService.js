@@ -12,15 +12,20 @@ angular.module("watchApiService", [])
         var subscribedSockets = {};
 
         return {
-            watchApi: function (apiObject, callbackFunction) {
-                console.log('sdf' + loginInformation.getHostname());
+            watchApi: function (apiObject, subscriberName, callbackFunction) {
 
                 // TODO: handle the removal of listeners on controller destruction
-
                 if (subscribedSockets.hasOwnProperty(apiObject)) {
                     // Already subscribted
-                    console.log('already subscribed');
-                    subscriberList[apiObject].push(callbackFunction);
+                    console.log(subscriberList[apiObject]);
+                    angular.forEach(subscriberList[apiObject], function(value, key) {
+                        console.log(key);
+                        if (key == subscriberName) {
+                            subscriberList[apiObject][key] = callbackFunction;
+                            return;
+                        }
+                    });
+                    subscriberList[apiObject][subscriberName] = callbackFunction;
                 } else {
                     // Need to subscribe
                     // TODO: Take own server instead of localhost
@@ -30,8 +35,8 @@ angular.module("watchApiService", [])
                     subscribedSockets[apiObject] = {};
                     subscribedSockets[apiObject].ws = ws;
 
-                    subscriberList[apiObject] = [];
-                    subscriberList[apiObject].push(callbackFunction);
+                    subscriberList[apiObject] =  {};
+                    subscriberList[apiObject][subscriberName] = callbackFunction;
 
                     ws.onopen = function(){
                         console.log("Socket has been opened!");
@@ -39,7 +44,7 @@ angular.module("watchApiService", [])
 
                     var self = this;
                     ws.onmessage = function(message){
-                        self.broadcastChange(self, apiObject, message);
+                        self.broadcastChange(apiObject, message);
 
 
                     };
@@ -49,41 +54,10 @@ angular.module("watchApiService", [])
 
             },
 
-            broadcastChange: function(self, apiObject, message) {
-                console.log('broadcast ' + message);
-
-                angular.forEach(self.subscribedSockets, function(value, key) {
-                    value();
+            broadcastChange: function(apiObject, message) {
+                angular.forEach(subscriberList[apiObject], function(value, key) {
+                    value(apiObject, message);
                 });
-            },
-
-            watchApiOld: function (path, server) {
-                console.log(path + ' - ' + server);
-                // Based on http://clintberry.com/2013/angular-js-websocket-service/
-
-                // We return this object to anything injecting our service
-                var Service = {};
-                // Keep all pending requests here until they get responses
-                var callbacks = {};
-                // Create a unique callback ID to map requests to responses
-                var currentCallbackId = 0;
-                // Create our websocket object with the address to the websocket
-                // TODO: Take own server instead of localhost
-                // TODO: determine the protocol (ws/wss) based on https
-                var ws = new WebSocket("ws://localhost:8080/proxy-api" + path + '&_server=' + server);
-
-                //var ws = new WebSocket('wss://192.168.1.20:8443/oapi/v1/projects?watch=true&access_token=ztY-JffxkXwnfO2Y_u-un2IycLAVoY_G-NSNlDReK5o');
-                ws.onopen = function(){
-                    console.log("Socket has been opened!");
-                };
-
-                ws.onmessage = function(message) {
-                    console.log("Got message");
-                    console.log(message);
-                };
-
-                return ws;
-
             }
 
         };
