@@ -12,21 +12,49 @@ angular.module("watchApiService", [])
         var subscribedSockets = {};
 
         return {
-            watchApi: function (apiObject) {
+            watchApi: function (apiObject, callbackFunction) {
                 console.log('sdf' + loginInformation.getHostname());
+
+                // TODO: handle the removal of listeners on controller destruction
 
                 if (subscribedSockets.hasOwnProperty(apiObject)) {
                     // Already subscribted
+                    console.log('already subscribed');
+                    subscriberList[apiObject].push(callbackFunction);
                 } else {
                     // Need to subscribe
+                    // TODO: Take own server instead of localhost
+                    // TODO: determine the protocol (ws/wss) based on https
+                    var ws = new WebSocket('ws://localhost:8080/proxy-api/oapi/v1/' + apiObject + '?watch=true&access_token=' + loginInformation.getUserToken() + '&_server=' + loginInformation.getHostname());
+
+                    subscribedSockets[apiObject] = {};
+                    subscribedSockets[apiObject].ws = ws;
+
+                    subscriberList[apiObject] = [];
+                    subscriberList[apiObject].push(callbackFunction);
+
+                    ws.onopen = function(){
+                        console.log("Socket has been opened!");
+                    };
+
+                    var self = this;
+                    ws.onmessage = function(message){
+                        self.broadcastChange(self, apiObject, message);
+
+
+                    };
                 }
 
                 // '/oapi/v1/groups?watch=true&access_token=' + loginInformation.getUserToken(), loginInformation.getHostname()
 
             },
 
-            broadcastChange: function(message) {
+            broadcastChange: function(self, apiObject, message) {
+                console.log('broadcast ' + message);
 
+                angular.forEach(self.subscribedSockets, function(value, key) {
+                    value();
+                });
             },
 
             watchApiOld: function (path, server) {

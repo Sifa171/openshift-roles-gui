@@ -7,7 +7,10 @@ angular.module('webuiApp')
         $scope.init = function() {
             console.log("init GroupsCtrl");
 
-            $scope.groupsWs = watchApiService.watchApi('groups');
+            $scope.groupsWs = watchApiService.watchApi('groups', function() {
+                // Callback if something changes
+                console.log('watched groups');
+            });
         };
 
         $scope.init();
