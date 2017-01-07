@@ -15,7 +15,9 @@ angular.module('webuiApp')
         };
 
         $scope.init = function() {
-            if ($location.path() && $location.path() != '/') {
+            if (!loginInformation.getUserName() || !loginInformation.getUserToken()) {
+                $window.location.href= "#login";
+            } else if ($location.path() && $location.path() != '/') {
               $scope.hideNav = false;
             }
         };
