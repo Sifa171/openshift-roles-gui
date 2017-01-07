@@ -15,7 +15,7 @@ angular.module('webuiApp')
         };
 
         $scope.init = function() {
-            if ($location.path() != '/') {
+            if ($location.path() && $location.path() != '/') {
               $scope.hideNav = false;
             }
         };
