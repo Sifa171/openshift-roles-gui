@@ -15,19 +15,31 @@ angular.module('webuiApp')
         };
 
         $scope.init = function() {
-            if (!loginInformation.getUserName() || !loginInformation.getUserToken()) {
-                $window.location.href= "#login";
-            } else if ($location.path() && $location.path() != '/') {
-              $scope.hideNav = false;
+            var tokenExpiration = localStorageService.get('tokenExpiration');
+            if(tokenExpiration != null && (tokenExpiration < Date.now() + 24 * 60 * 60 * 1000)){
+                setLoginInformationFromLocalStorage();
+                console.log(loginInformation.getUserToken());
+                console.log(loginInformation.getUserName());
+                console.log(loginInformation.getHostname());
+            }else{
+                if (!loginInformation.getUserName() || !loginInformation.getUserToken()) {
+                    $window.location.href= "#login";
+                } else if ($location.path() && $location.path() != '/') {
+                    $scope.hideNav = false;
+                }
             }
         };
         $scope.init();
 
         $scope.loadLoginInformationFromLocalStorage = function () {
+            setLoginInformationFromLocalStorage();
+        };
+
+        function setLoginInformationFromLocalStorage() {
             loginInformation.setHostname(localStorageService.get('hostname'));
             loginInformation.setUserName(localStorageService.get('username'));
-            loginInformation.setUserToken(localStorageService.get('usertoken'));
-        };
+            loginInformation.setUserToken(localStorageService.get('userToken'));
+        }
 
         $scope.logout = function () {
             localStorageService.clearAll();

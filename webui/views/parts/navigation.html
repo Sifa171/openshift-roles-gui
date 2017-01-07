@@ -21,7 +21,10 @@
                     <div class="arrow"></div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <span class="i pficon pficon-cluster"></span> OSCP URL: {{ loginInfo.getHostname() }}
+                            <span class="i pficon pficon-user"></span> Username: {{ loginInfo.getUserName() }}
+                        </li>
+                        <li class="list-group-item">
+                            <span class="i pficon pficon-cluster"></span> OSCP Hostname:<br> {{ loginInfo.getHostname() }}
                         </li>
                         <li class="list-group-item">
                             <span class="i fa fa-lock"></span> OAuthToken: {{ loginInfo.getUserToken() }}
