@@ -1,14 +1,36 @@
 <div class="">
-    <div class="row row-cards-pf" ng-init="start()">
-        <div class="col-xs-12 col-sm-6 col-md-3" ng-show="notloggedIn">
+    <div class="row row-cards-pf" ng-init="start()" ng-show="notloggedIn">
             <div class="alert alert-warning">
                 <span class="pficon pficon-warning-triangle-o"></span>
                 <strong>Not logged in!</strong> You won't see any information, before <a href="#/" class="alert-link">loggin in</a>.
             </div>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-4">
+        <div class="card-pf card-pf-accented card-pf-aggregate-status card-pf-aggregate-status-mini">
+            <h2 class="card-pf-title">
+                <span class="fa fa-rebel"></span>
+                <span class="card-pf-aggregate-status-count">{{ groupCount }}</span> Groups
+            </h2>
         </div>
+    </div>
+
+
+
+    <div class="row row-cards-pf">
         <div class="col-xs-12 col-sm-6 col-md-3">
             <label>Main aa</label>
             fghgh
         </div>
     </div>
 </div>
+<script>
+    $(function() {
+        // matchHeight the contents of each .card-pf and then the .card-pf itself
+        $(".row-cards-pf > [class*='col'] > .card-pf .card-pf-title").matchHeight();
+        $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-body").matchHeight();
+        $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-footer").matchHeight();
+        $(".row-cards-pf > [class*='col'] > .card-pf").matchHeight();
+        // initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
