@@ -13,6 +13,13 @@ angular.module('webuiApp')
                 if (success) {
                     scope.groups = response.data.items;
                     console.log(scope.groups);
+
+                    // Subscribe for change
+                    $scope.groupsWs = watchApiService.watchApi('groups', 'GroupsCtrl', function(apiObject, message) {
+                        // Callback if something changes
+                        console.log('Got a change for ' + apiObject);
+                        console.log(message);
+                    });
                 } else {
                     // TODO: do additional error handling
                     console.log('error');
@@ -20,12 +27,7 @@ angular.module('webuiApp')
 
             });
 
-            // Subscribe for change
-            $scope.groupsWs = watchApiService.watchApi('groups', 'GroupsCtrl', function(apiObject, message) {
-                // Callback if something changes
-                console.log('Got a change for ' + apiObject);
-                console.log(message);
-            });
+
         };
 
         $scope.init();
