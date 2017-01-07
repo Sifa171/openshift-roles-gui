@@ -14,6 +14,13 @@ angular.module('webuiApp')
             return viewLocation === $location.path() ? "active" : "";
         };
 
+        $scope.init = function() {
+            if ($location.path() != '/') {
+              $scope.hideNav = false;
+            }
+        };
+        $scope.init();
+
         $scope.loadLoginInformationFromLocalStorage = function () {
             loginInformation.setHostname(localStorageService.get('hostname'));
             loginInformation.setUserName(localStorageService.get('username'));
@@ -27,7 +34,7 @@ angular.module('webuiApp')
             loginInformation.setUserToken(null);
             hideNavigation.setHide(true);
             $window.location.href= ".";
-        }
+        };
 
         // Load data from localStorage
         $scope.loadLoginInformationFromLocalStorage();
