@@ -16,6 +16,7 @@ angular.module('webuiApp')
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
                     var groups = response.data.items;
+                    $scope.groupCount = groups.length;
                     console.log(groups);
                 } else {
                     console.log('error');
