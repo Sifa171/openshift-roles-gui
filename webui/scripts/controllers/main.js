@@ -8,9 +8,9 @@ angular.module('webuiApp')
                 $scope.notloggedIn = true;
             }
             countRoles();
-            //countGroups();
-            //countUser();
-            //countPolicyBindings();
+            countGroups();
+            countUser();
+            countPolicyBindings();
 
         };
 
@@ -31,7 +31,7 @@ angular.module('webuiApp')
         };
 
         function countRoles(){
-            var object = 'watch/roles';
+            var object = 'roles';
             $scope.roleCount= 0;
             watchApiService.watchApi(object, 'MainCtrl', function(apiObject, message) {
                 // Callback if something changes
