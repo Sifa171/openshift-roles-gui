@@ -30,7 +30,7 @@ angular.module("watchApiService", [])
                     // Need to subscribe
                     // TODO: Take own server instead of localhost
                     // TODO: determine the protocol (ws/wss) based on https
-                    var ws = new WebSocket('ws://localhost:8080/proxy-api/oapi/v1/' + apiObject + '?watch=true&access_token=' + loginInformation.getUserToken() + '&_server=' + loginInformation.getHostname());
+                    var ws = new WebSocket('ws://localhost:8080/proxy-web/oapi/v1/' + apiObject + '?watch=true&access_token=' + loginInformation.getUserToken() + '&_server=' + loginInformation.getHostname());
 
                     subscribedSockets[apiObject] = {};
                     subscribedSockets[apiObject].ws = ws;

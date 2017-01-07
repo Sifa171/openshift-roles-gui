@@ -4,7 +4,7 @@ angular.module('webuiApp')
     .controller('MainCtrl', function ($scope, hideNavigation, loginInformation, apiObjectHandler) {
         $scope.start = function () {
             hideNavigation.setHide(false);
-            if(!loginInformation.getUserName() && !loginInformation.getUserToken() && !loginInformation.getUserToken()){
+            if (!loginInformation.getUserName() && !loginInformation.getUserToken() && !loginInformation.getUserToken()) {
                 $scope.notloggedIn = true;
             }
             countGroups();
@@ -13,9 +13,15 @@ angular.module('webuiApp')
 
         function countGroups() {
             var object = 'groups';
-            apiObjectHandler.requestObject(object);
-            var response = apiObjectHandler.getResponse();
-            var groups = response.data.items;
-            console.log(groups);
+            apiObjectHandler.requestObject(object, function (success, response) {
+                if (success) {
+                    var groups = response.data.items;
+                    console.log(groups);
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+            });
+
         }
     });
