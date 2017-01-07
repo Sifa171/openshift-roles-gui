@@ -9,7 +9,7 @@ angular.module('webuiApp')
             }
             countGroups();
 
-        }
+        },
 
         function countGroups() {
             var object = 'groups';
