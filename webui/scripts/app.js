@@ -12,7 +12,8 @@ angular
         'LocalStorageModule',
         'patternfly',
         'patternfly.charts',
-        'loginService'
+        'loginService',
+        'watchApiService'
     ])
     .config(function ($routeProvider) {
         $routeProvider
