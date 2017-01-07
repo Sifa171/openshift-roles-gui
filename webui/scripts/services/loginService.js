@@ -74,7 +74,7 @@ angular.module("loginService", [])
                         password: this.getPassword(),
                         server: this.getHostname()
                     })
-                }
+                };
                 var self = this;
                 $http(req).then(function successCallback(response) {
                     if(response.data.error == true){

@@ -9,6 +9,7 @@ angular.module("watchApiService", [])
 
         return {
             watchApi: function (path, server) {
+                console.log(path + ' - ' + server);
                 // Based on http://clintberry.com/2013/angular-js-websocket-service/
 
                 // We return this object to anything injecting our service
@@ -18,7 +19,8 @@ angular.module("watchApiService", [])
                 // Create a unique callback ID to map requests to responses
                 var currentCallbackId = 0;
                 // Create our websocket object with the address to the websocket
-                var ws = new WebSocket("ws://localhost:8000/proxy-api" + path + '&_server=' + server);
+                // TODO: Take own server instead of localhost
+                var ws = new WebSocket("ws://localhost:8080/proxy-api" + path + '&_server=' + server);
 
                 ws.onopen = function(){
                     console.log("Socket has been opened!");
@@ -28,6 +30,8 @@ angular.module("watchApiService", [])
                     console.log("Got message");
                     console.log(message);
                 };
+
+                return ws;
 
             }
 

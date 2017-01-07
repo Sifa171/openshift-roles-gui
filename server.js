@@ -43,16 +43,10 @@ function jsonResponse(responseData, errorMessage, errorCode) {
     return JSON.stringify(response);
 }
 
-var proxy = httpProxy.createProxyServer({});
-
-proxy.on('upgrade', function (req, socket, head) {
-    console.log(req);
-    console.log('--  WebProxy Upgrade detected');
-
-});
+var proxy = httpProxy.createProxyServer({ws:  true});
 
 // Create http server
-http.createServer(function (req, res) {
+var httpServer = http.createServer(function (req, res) {
     // Parse the request url
     var url = parser.parse(req.url, true);
 
@@ -147,11 +141,11 @@ http.createServer(function (req, res) {
                     // For debugging/dev purposes: no caching of js files
                     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
                     res.setHeader('Pragma', 'no-cache');
-                    console.log('Serve static page: ' + req.url + ' (Without caching for dev)');
+                   // console.log('Serve static page: ' + req.url + ' (Without caching for dev)');
                     break;
                 default:
                     // Access log
-                    console.log('Serve static page: ' + req.url);
+                   // console.log('Serve static page: ' + req.url);
                     break;
             }
 
@@ -159,5 +153,26 @@ http.createServer(function (req, res) {
             serve(req, res, done);
     }
 
-}).listen(8080);
+});
+httpServer.listen(8080);
+
+// Proxy webSocket connections
+httpServer.on('upgrade', function (req, socket, head) {
+
+    console.log('--  httpServer Upgrade detected');
+
+    console.log(head);
+
+    // Simple proxy to api
+    var url = parser.parse(req.url, true);
+    console.log('api-proxy to server ' + url.query._server);
+    console.log(req.url);
+    // Rewrite URL to original request
+    req.url = /*'http://' + url.query._server + */req.url.substr(10);
+    console.log(req.url);
+
+
+    // Proxy upgrade request
+    proxy.ws(req, socket, head, {target: req.url});
+});
 console.log("Now serving on http://localhost:8080");
