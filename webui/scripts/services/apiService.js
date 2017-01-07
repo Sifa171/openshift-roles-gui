@@ -20,7 +20,6 @@ angular.module("apiService", [])
                 };
                 var self = this;
                 $http(req).then(function successCallback(response) {
-                    console.log(response);
                     callbackFunction(true, response);
                 }, function errorCallback(response) {
                     callbackFunction(false, response);
