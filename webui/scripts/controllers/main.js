@@ -15,44 +15,50 @@ angular.module('webuiApp')
 
         function countUser(){
             var object = 'users';
-            apiObjectHandler.requestObject(object, function (success, response) {
-                if (success) {
-                    var users = response.data.items;
-                    $scope.userCount = users.length;
-                } else {
-                    console.log('error');
-                    console.log(response);
-                }
+            $scope.userCount = 0;
+            watchApiService.watchApi(object, 'MainCtrl', function(apiObject, message) {
+                // Callback if something changes
+                console.log('Got a change for ' + apiObject);
+                console.log(message);
+                $scope.$apply(function(){
+                    var dataJson = angular.fromJson(message.data);
+                    if(dataJson.type == 'ADDED'){
+                        $scope.userCount = $scope.userCount +1;
+                    }
+                });
             });
-
         };
 
         function countRoles(){
             var object = 'roles';
-            apiObjectHandler.requestObject(object, function (success, response) {
-                if (success) {
-                    var roles = response.data.items;
-                    $scope.roleCount = roles.length;
-                } else {
-                    console.log('error');
-                    console.log(response);
-                }
+            $scope.roleCount= 0;
+            watchApiService.watchApi(object, 'MainCtrl', function(apiObject, message) {
+                // Callback if something changes
+                console.log('Got a change for ' + apiObject);
+                console.log(message);
+                $scope.$apply(function(){
+                    var dataJson = angular.fromJson(message.data);
+                    if(dataJson.type == 'ADDED'){
+                        $scope.roleCount = $scope.roleCount +1;
+                    }
+                });
             });
-
         };
 
         function countPolicyBindings(){
             var object = 'policybindings';
-            apiObjectHandler.requestObject(object, function (success, response) {
-                if (success) {
-                    var policybindings = response.data.items;
-                    $scope.policybindingCount = policybindings.length;
-                } else {
-                    console.log('error');
-                    console.log(response);
-                }
+            $scope.policybindingCount= 0;
+            watchApiService.watchApi(object, 'MainCtrl', function(apiObject, message) {
+                // Callback if something changes
+                console.log('Got a change for ' + apiObject);
+                console.log(message);
+                $scope.$apply(function(){
+                    var dataJson = angular.fromJson(message.data);
+                    if(dataJson.type == 'ADDED'){
+                        $scope.policybindingCount = $scope.policybindingCount +1;
+                    }
+                });
             });
-
         };
 
         function countGroups() {
