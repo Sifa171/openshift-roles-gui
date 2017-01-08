@@ -26,6 +26,6 @@ angular.module("apiService", [])
                 });
             }
         }
-    })
+    });
 
 
