@@ -14,6 +14,14 @@ angular.module('webuiApp')
 
         };
 
+        $scope.refresh = function () {
+            countRoles();
+            countGroups();
+            countUser();
+            countPolicyBindings();
+            // TODO: REfresh Scope
+        };
+
         function countUser(){
             var object = 'users';
             apiObjectHandler.requestObject(object, function (success, response) {
