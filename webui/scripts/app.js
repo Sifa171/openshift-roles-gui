@@ -14,7 +14,8 @@ angular
         'patternfly.charts',
         'loginService',
         'watchApiService',
-        'apiService'
+        'apiService',
+        'apiCuratorService'
     ])
     .config(function ($routeProvider) {
         $routeProvider

@@ -9,7 +9,7 @@ angular.module("apiService", [])
         return{
 
             requestObject : function (apiObject, callbackFunction) {
-                var apiUrl = 'http://localhost:8080/api-proxy/oapi/v1/' + apiObject + '?_server=' + loginInformation.getHostname();
+                var apiUrl = '/api-proxy/oapi/v1/' + apiObject + '?_server=' + loginInformation.getHostname();
                 var req = {
                     method: 'GET',
                     url: apiUrl,
@@ -26,6 +26,6 @@ angular.module("apiService", [])
                 });
             }
         }
-    })
+    });
 
 
