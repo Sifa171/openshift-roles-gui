@@ -27,7 +27,11 @@ angular.module('webuiApp')
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
                     var users = response.data.items;
-                    $scope.userCount = users.length;
+                    if(users.length == 0){
+                        $scope.userCount = 0;
+                    }else{
+                        $scope.userCount = users.length;
+                    }
                 } else {
                     console.log('error');
                     console.log(response);
@@ -41,7 +45,11 @@ angular.module('webuiApp')
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
                     var roles = response.data.items;
-                    $scope.roleCount = roles.length;
+                    if(roles.length == 0){
+                        $scope.roleCount = 0;
+                    }else{
+                        $scope.roleCount = roles.length;
+                    }
                 } else {
                     console.log('error');
                     console.log(response);
@@ -54,7 +62,11 @@ angular.module('webuiApp')
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
                     var policybindings = response.data.items;
-                    $scope.policybindingCount = policybindings.length;
+                    if(policybindings.length == 0){
+                        $scope.policybindingCount = 0;
+                    }else{
+                        $scope.policybindingCount = policybindings.length;
+                    }
                 } else {
                     console.log('error');
                     console.log(response);
@@ -67,7 +79,11 @@ angular.module('webuiApp')
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
                     var groups = response.data.items;
-                    $scope.groupCount = groups.length;
+                    if(groups.length == 0){
+                        $scope.groupCount = 0;
+                    }else{
+                        $scope.groupCount = groups.length;
+                    }
                 } else {
                     console.log('error');
                     console.log(response);
