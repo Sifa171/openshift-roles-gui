@@ -12,7 +12,7 @@ angular.module("watchApiService", [])
         var subscribedSockets = {};
 
         return {
-            watchApi: function (apiObject, subscriberName, callbackFunction) {
+            watchApi: function (apiObject, subscriberName, callbackFunction, resourceVersion) {
 
                 // TODO: handle the removal of listeners on controller destruction
                 if (subscribedSockets.hasOwnProperty(apiObject)) {
@@ -34,7 +34,12 @@ angular.module("watchApiService", [])
                     // TODO: Take own server instead of localhost
                     // TODO: determine the protocol (ws/wss) based on https
                     console.log('need to subscribe');
-                   var ws = new WebSocket('ws://localhost:8080/proxy-web/oapi/v1/' + apiObject + '?watch=true&access_token=' + loginInformation.getUserToken() + '&_server=' + loginInformation.getHostname());
+
+                    var connectionUrl = 'ws://localhost:8080/proxy-web/oapi/v1/' + apiObject + '?watch=true&access_token=' + loginInformation.getUserToken() + '&_server=' + loginInformation.getHostname();
+                    if (resourceVersion && resourceVersion > 0) {
+                        connectionUrl += '&resourceVersion=' + resourceVersion;
+                    }
+                   var ws = new WebSocket(connectionUrl);
                    // var ws = new WebSocket('wss://192.168.1.20:8443/oapi/v1/' + apiObject + '?watch=true&access_token=' + loginInformation.getUserToken() + '&_server=' + loginInformation.getHostname());
 
                     subscribedSockets[apiObject] = {};
@@ -43,7 +48,7 @@ angular.module("watchApiService", [])
                     subscriberList[apiObject] = {};
                     subscriberList[apiObject][subscriberName] = callbackFunction;
 
-                    console.log("dreck "+apiObject+'_'+subscriberName);
+                    //console.log("dreck "+apiObject+'_'+subscriberName);
 
 
                     ws.onopen = function () {

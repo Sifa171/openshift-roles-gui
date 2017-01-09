@@ -8,7 +8,7 @@
  */
 
 angular.module("apiCuratorService", [])
-    .factory('apiCurator', function (loginInformation, $http, $rootScope, watchApiService) {
+    .factory('apiCurator', function (loginInformation, $http, $rootScope, watchApiService, apiObjectHandler) {
 
         // List with all collected data
         // index is the apiObject
@@ -20,16 +20,72 @@ angular.module("apiCuratorService", [])
 
         return {
 
+            getData: function(apiObject) {
+                if (!dataCollection.hasOwnProperty(apiObject)) {
+                    return [];
+                } else {
+                    return dataCollection[apiObject].data;
+                }
+            },
+
             /**
              * Requests the data of apiObject
              * If data from a given apiObject is already subscribed, a requestData call only returns the current version of data without requesting it
              * if onlyInitial=true the data doesn't have to be the latest, because it is afterwards watched
              *
+             * After requesting data you can either  bind it directly to the ui or give a callback
+             *
              * @param apiObject
              * @param callback
-             * @param onlyInitial only for initial data
+             * @param onlyInitial only for initial data (optional)
              */
             requestData: function(apiObject, callback, onlyInitial) {
+                // Check if data are already requested
+                if (dataCollection.hasOwnProperty(apiObject) && (onlyInitial || dataCollection[apiObject].subscribed)) {
+                    // Just return the data
+                    console.log('apiCurator: returning cached data');
+                } else {
+                    // No data stored: request them
+                    console.log('apiCurator: no recent data stored, requesting');
+
+                    // Setup data structure
+                    dataCollection[apiObject] = {
+                        lastResourceVersion: 0,
+                        data: [],
+                        subscribed: false
+                    };
+
+                    // Request data
+                    var self = this;
+                    apiObjectHandler.requestObject(apiObject, function (success, response) {
+                        self.apiRequestCallback(success, response, apiObject);
+                        if (callback) {
+                            callback(success, response, apiObject);
+                        }
+                    });
+                }
+
+            },
+
+            requestWatch: function(apiObject, callback) {
+
+            },
+
+            /**
+             * Callback when requesting data via apiService
+             * @param success
+             * @param data
+             */
+            apiRequestCallback: function(success, data, apiObject) {
+                // Got data from the api
+                console.log('got data for ' + apiObject);
+                console.log(data);
+
+                //$rootScope.$apply(function(){
+                    dataCollection[apiObject].data = data.data.items;
+                    dataCollection[apiObject].lastResourceVersion = data.data.metadata.resourceVersion;
+                //});
+
 
             },
 
@@ -41,8 +97,26 @@ angular.module("apiCuratorService", [])
              * @param callback
              */
             watchData: function(apiObject, subscriberId, callback) {
+                var resourceVersion = 0;
+                if (dataCollection.hasOwnProperty(apiObject)) {
+                    // Daten bestehen schon, resourceVersion setzen
+                    resourceVersion = dataCollection[apiObject].lastResourceVersion;
+                }
 
+                var self = this;
+                watchApiService.watchApi('groups', 'GroupsCtrl', function (apiObject, message) {
+                    // Callback if something changes
+                    $scope.$apply(function () {
+                        var dataJson = angular.fromJson(message.data);
+                        if (dataJson.type == 'ADDED') {
+                            $scope.groups.push(dataJson.object);
+                        }
+                    }, resourceVersion);
+
+                });
             },
+
+
 
 
             init : function () {

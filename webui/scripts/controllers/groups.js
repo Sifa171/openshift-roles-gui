@@ -7,9 +7,16 @@ angular.module('webuiApp')
 
         $scope.init = function () {
             console.log("init GroupsCtrl");
-            apiCurator.init();
-            $scope.groups = apiCurator.getGroups();
-            console.log(apiCurator.getGroups());
+           // $scope.$apply(function () {
+            apiCurator.requestData('groups', function() {
+                $scope.groups = apiCurator.getData('groups');
+            }, true);
+
+            console.log($scope.groups);
+           // });
+            //apiCurator.init();
+            //$scope.groups = apiCurator.getGroups();
+            //console.log(apiCurator.getGroups());
             // Subscribe for change
       /*      $scope.groupsWs = watchApiService.watchApi('groups', 'GroupsCtrl', function (apiObject, message) {
                 // Callback if something changes
