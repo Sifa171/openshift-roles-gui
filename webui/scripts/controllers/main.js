@@ -11,6 +11,7 @@ angular.module('webuiApp')
             countGroups();
             countUser();
             countPolicyBindings();
+            countVerbs();
 
         };
 
@@ -19,6 +20,7 @@ angular.module('webuiApp')
             countGroups();
             countUser();
             countPolicyBindings();
+            countVerbs();
             // TODO: REfresh Scope
         };
 
@@ -41,7 +43,7 @@ angular.module('webuiApp')
         };
 
         function countRoles(){
-            var object = 'roles';
+            var object = 'clusterroles';
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
                     var roles = response.data.items;
@@ -83,6 +85,23 @@ angular.module('webuiApp')
                         $scope.groupCount = 0;
                     }else{
                         $scope.groupCount = groups.length;
+                    }
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+            });
+        };
+
+        function countVerbs() {
+            var object = 'clusterpolicybindings';
+            apiObjectHandler.requestObject(object, function (success, response) {
+                if (success) {
+                    var verbs = response.data.items;
+                    if(verbs.length == 0){
+                        $scope.verbCount = 0;
+                    }else{
+                        $scope.verbCount = verbs.length;
                     }
                 } else {
                     console.log('error');
