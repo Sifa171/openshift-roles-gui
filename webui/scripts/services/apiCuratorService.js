@@ -44,6 +44,11 @@ angular.module("apiCuratorService", [])
                 if (dataCollection.hasOwnProperty(apiObject) && (onlyInitial || dataCollection[apiObject].subscribed)) {
                     // Just return the data
                     console.log('apiCurator: returning cached data');
+
+                    // Execute the callback anyway
+                    if (callback) {
+                        callback(true, dataCollection[apiObject].data, apiObject);
+                    }
                 } else {
                     // No data stored: request them
                     console.log('apiCurator: no recent data stored, requesting');
@@ -60,7 +65,7 @@ angular.module("apiCuratorService", [])
                     apiObjectHandler.requestObject(apiObject, function (success, response) {
                         self.apiRequestCallback(success, response, apiObject);
                         if (callback) {
-                            callback(success, response, apiObject);
+                            callback(true, response.data.items, apiObject);
                         }
                     });
                 }
@@ -82,6 +87,7 @@ angular.module("apiCuratorService", [])
                 console.log(data);
 
                 //$rootScope.$apply(function(){
+
                     dataCollection[apiObject].data = data.data.items;
                     dataCollection[apiObject].lastResourceVersion = data.data.metadata.resourceVersion;
                 //});
@@ -106,10 +112,11 @@ angular.module("apiCuratorService", [])
                 var self = this;
                 watchApiService.watchApi('groups', 'GroupsCtrl', function (apiObject, message) {
                     // Callback if something changes
-                    $scope.$apply(function () {
+                    $rootScope.$apply(function () {
                         var dataJson = angular.fromJson(message.data);
+                        console.log('WS: ' + dataJson.type);
                         if (dataJson.type == 'ADDED') {
-                            $scope.groups.push(dataJson.object);
+                            $rootScope.groups.push(dataJson.object);
                         }
                     }, resourceVersion);
 
@@ -121,13 +128,13 @@ angular.module("apiCuratorService", [])
 
             init : function () {
 
-                var groupsWs = watchApiService.watchApi('groups', 'GroupsCtrl', function (apiObject, message) {
+              /**  var groupsWs = watchApiService.watchApi('groups', 'GroupsCtrl', function (apiObject, message) {
                     // Callback if something changes
                     $rootScope.$apply(function () {
                         console.log('apply root scope');
                         groups.push({metadata:{name:'group two'}});
                     });
-                });
+                });*/
             }
         }
     });

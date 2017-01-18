@@ -10,6 +10,7 @@ angular.module('webuiApp')
            // $scope.$apply(function () {
             apiCurator.requestData('groups', function() {
                 $scope.groups = apiCurator.getData('groups');
+                console.log($scope.groups);
             }, true);
 
             console.log($scope.groups);
@@ -35,7 +36,7 @@ angular.module('webuiApp')
         $scope.$on("$destroy", function handler() {
             // remove from handler
             console.log('-------- destruction');
-            watchApiService.removeWatch('groups', 'GroupsCtrl');
+           // watchApiService.removeWatch('groups', 'GroupsCtrl');
         });
 
     });
