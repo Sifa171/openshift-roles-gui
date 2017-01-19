@@ -7,20 +7,20 @@ angular.module('webuiApp')
             if (!loginInformation.getUserName() && !loginInformation.getUserToken() && !loginInformation.getUserToken()) {
                 $scope.notloggedIn = true;
             }
-            countRoles();
             countGroups();
             countUser();
             countPolicyBindings();
-            countVerbs();
+            countClusterPolicybindings();
+            countClusterRoles();
 
         };
 
         $scope.refresh = function () {
-            countRoles();
             countGroups();
             countUser();
             countPolicyBindings();
-            countVerbs();
+            countClusterPolicybindings();
+            countClusterRoles();
             // TODO: REfresh Scope
         };
 
@@ -40,23 +40,6 @@ angular.module('webuiApp')
                 }
             });
 
-        };
-
-        function countRoles(){
-            var object = 'clusterroles';
-            apiObjectHandler.requestObject(object, function (success, response) {
-                if (success) {
-                    var roles = response.data.items;
-                    if(roles.length == 0){
-                        $scope.roleCount = 0;
-                    }else{
-                        $scope.roleCount = roles.length;
-                    }
-                } else {
-                    console.log('error');
-                    console.log(response);
-                }
-            });
         };
 
         function countPolicyBindings(){
@@ -93,15 +76,32 @@ angular.module('webuiApp')
             });
         };
 
-        function countVerbs() {
+        function countClusterPolicybindings() {
             var object = 'clusterpolicybindings';
             apiObjectHandler.requestObject(object, function (success, response) {
                 if (success) {
-                    var verbs = response.data.items;
-                    if(verbs.length == 0){
-                        $scope.verbCount = 0;
+                    var clusterpolicybindings = response.data.items[0].roleBindings;
+                    if(clusterpolicybindings.length == 0){
+                        $scope.clusterpolicybindingsCount = 0;
                     }else{
-                        $scope.verbCount = verbs.length;
+                        $scope.clusterpolicybindingsCount = clusterpolicybindings.length;
+                    }
+                } else {
+                    console.log('error');
+                    console.log(response);
+                }
+            });
+        };
+
+        function countClusterRoles() {
+            var object = 'clusterroles';
+            apiObjectHandler.requestObject(object, function (success, response) {
+                if (success) {
+                    var clusterroles = response.data.items;
+                    if(clusterroles.length == 0){
+                        $scope.clusterRoleCount = 0;
+                    }else{
+                        $scope.clusterRoleCount = clusterroles.length;
                     }
                 } else {
                     console.log('error');
