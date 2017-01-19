@@ -65,7 +65,7 @@ angular.module("apiCuratorService", [])
                     apiObjectHandler.requestObject(apiObject, function (success, response) {
                         self.apiRequestCallback(success, response, apiObject);
                         if (callback) {
-                            callback(true, response.data.items, apiObject);
+                            callback(success, response.data.items, apiObject);
                         }
                     });
                 }
@@ -82,6 +82,10 @@ angular.module("apiCuratorService", [])
              * @param data
              */
             apiRequestCallback: function(success, data, apiObject) {
+                if (!success) {
+                    console.log('Error: Could not get data for ' + apiObject)
+                    return;
+                }
                 // Got data from the api
                 console.log('got data for ' + apiObject);
                 console.log(data);
